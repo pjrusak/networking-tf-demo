@@ -4,4 +4,5 @@
   roles:
     - common_update
     - common_prerequisites
+    - common_checkout_repo
 

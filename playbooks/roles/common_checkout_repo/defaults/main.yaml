@@ -1,0 +1,14 @@
+---
+
+repositories:
+  - name: devstack
+    url: 'https://{{ git_openstack }}/openstack-dev/devstack'
+    branch: 'master'
+  - name: contrail-ansible-deployer
+    url: 'https://{{ git_opencontrail }}/Juniper/contrail-ansible-deployer'
+    branch: 'master'
+git_openstack: 'git.openstack.org'
+git_opencontrail: 'review.opencontrail.org'
+override_repositories: false
+checkout_repositories: true
+

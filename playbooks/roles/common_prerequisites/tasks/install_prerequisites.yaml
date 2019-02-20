@@ -25,4 +25,6 @@
     - 'pip'
     - 'setuptools'
   become: true
+  tags:
+    - skip_ansible_lint
 

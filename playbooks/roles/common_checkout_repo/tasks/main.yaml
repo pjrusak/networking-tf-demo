@@ -1,0 +1,4 @@
+---
+
+- include_tasks: 'git_checkout.yaml'
+  when: checkout_repositories

@@ -1,0 +1,13 @@
+---
+
+- when: checkout_repositories
+  block:
+    - name: checkout devstack repository
+      git:
+        repo: '{{ item.url }}'
+        dest: '{{ ansible_env.HOME }}/{{ item.name }}'
+        version: '{{ item.branch }}'
+        clone: '{{ override_repositories }}'
+      with_items:
+        - '{{ repositories }}'
+
