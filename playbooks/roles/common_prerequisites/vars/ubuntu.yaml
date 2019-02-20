@@ -1,0 +1,15 @@
+---
+
+packages_name:
+  - git
+  - ack-grep
+  - tree
+  - curl
+  - wget
+  - vim
+  - jq
+  - patch
+  - tcpdump
+  - vim
+  - tmux
+
