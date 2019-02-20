@@ -1,0 +1,5 @@
+---
+
+- include_tasks: 'install_prerequisities.yaml'
+  when: setup_machines
+

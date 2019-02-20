@@ -1,0 +1,28 @@
+---
+
+- name: include distribution specific package names
+  include_vars: '{{ item }}'
+  with_first_found:
+    - files:
+        - '{{ ansible_distribution | lower }}.yaml'
+        - 'os_default.yaml'
+      paths:
+        - '../vars'
+
+- name: install prerequisities
+  package:
+    name: '{{ item }}'
+    state: present
+  with_dict:
+    - packages_name
+  become: true
+
+- name: upgrade pip & setuptools to newest version
+  pip:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - 'pip'
+    - 'setuptools'
+  become: true
+

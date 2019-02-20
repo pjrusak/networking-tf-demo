@@ -1,0 +1,16 @@
+---
+
+packages_name:
+  - epel-release
+  - git
+  - ack
+  - tree
+  - curl
+  - wget
+  - vim
+  - jq
+  - patch
+  - tcpdump
+  - vim
+  - tmux
+
