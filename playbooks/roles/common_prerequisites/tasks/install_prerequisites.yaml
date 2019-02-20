@@ -13,8 +13,8 @@
   package:
     name: '{{ item }}'
     state: present
-  with_dict:
-    - packages_name
+  with_items:
+    - '{{ packages_name }}'
   become: true
 
 - name: upgrade pip & setuptools to newest version
