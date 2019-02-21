@@ -1,0 +1,12 @@
+- name: reboot if there was a change
+  shell: "sleep 5 && reboot"
+  async: 1
+  poll: 0
+  ignore_errors: true
+  listen: reboot-machine
+
+- name: wait for machine to come back
+  local_action: wait_for host={{ ansible_host }} state=started port=22 delay=30
+  become: no
+  listen: reboot-machine
+

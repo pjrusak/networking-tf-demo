@@ -1,0 +1,30 @@
+---
+
+- name: update ubuntu machine
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+  ignore_errors: true
+  become: true
+
+- name: upgrade installed packages
+  apt:
+    name: '*'
+    state: latest
+    force_apt_get: true
+  become: true
+  tags:
+    - skip_ansible_lint
+
+- stat:
+    path: '/var/run/reboot-required'
+  register: stat_reboot
+
+- debug:
+    msg: 'trigger machine reboot'
+  notify: reboot-machine
+  when: stat_reboot.stat.exists
+
+- name: reboot machine if required
+  meta: flush_handlers
+

@@ -1,4 +1,4 @@
 ---
 
-- include_tasks: 'update_machine.yaml'
+- include_tasks: 'update_machine_{{ ansible_distribution | lower }}.yaml'
   when: update_machine

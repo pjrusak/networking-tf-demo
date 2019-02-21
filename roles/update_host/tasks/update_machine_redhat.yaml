@@ -1,0 +1,25 @@
+---
+
+- name: install yum-utils
+  package:
+    name: yum-utils
+    state: present
+  become: true
+
+- name: update centos machine
+  yum:
+    name: '*'
+    state: latest
+  become: true
+  tags:
+    - skip_ansible_lint
+
+- name: check if reboot is required
+  shell: needs-restarting -r
+  failed_when: false
+  changed_when: false
+  notify: reboot-machine
+
+- name: reboot machine if needed
+  meta: flush_handlers
+
