@@ -2,8 +2,8 @@
 
 - hosts: all
   roles:
-    - common_update
-    - common_prerequisites
-    - common_checkout_repo
+    - update_host
+    - install_prerequisites
+    - checkout_repos
     - configure_network
 
