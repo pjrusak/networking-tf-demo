@@ -11,14 +11,12 @@
 
 - name: copy interface config template
   template:
-    src: 'ifcfg_{{ ansible_distribution | lower }}.j2'
+    src: 'ifcfg-{{ ansible_distribution | lower }}.j2'
     dest: '{{ intf_config_path }}/{{ intf_script }}'
-#  with_filetree: '../templates'
+  notify:
+    - enable-interface
   become: true
 
-- name: enable interface
-  net_interface:
-    name: '{{ backend_interface }}'
-    enabled: true
-    state: up
-  become: true
+- meta: reconfigure {{ backend_interface }} interface
+  flush: flush_handlers
+

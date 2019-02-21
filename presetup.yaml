@@ -5,5 +5,5 @@
     - common_update
     - common_prerequisites
     - common_checkout_repo
-    - common_network
+    - configure_network
 

@@ -1,9 +1,0 @@
-{% set ipv4_host = backend_ip | unique | ipv4('host/prefix') | first %}
-DEVICE={{ backend_interface }}
-IPADDR={{ ipv4_host | ipaddr('address') }}
-NETMASK={{ ipv4_host | ipaddr('netmask') }}
-NETWORK={{ ipv4_host | ipaddr('network') }}   
-BROADCAST={{ ipv4_host | ipaddr('broadcast') }}   
-ONBOOT=yes
-NM_CONTROLLED=no  
-BOOTPROTO=none  

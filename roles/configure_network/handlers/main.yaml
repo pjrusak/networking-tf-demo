@@ -1,0 +1,4 @@
+- name: enable-interface
+  command: 'ifup {{ backend_interface }}'
+  become: true
+
