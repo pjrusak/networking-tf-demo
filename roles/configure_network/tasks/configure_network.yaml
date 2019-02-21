@@ -17,6 +17,6 @@
     - enable-interface
   become: true
 
-- meta: reconfigure {{ backend_interface }} interface
-  flush: flush_handlers
+- name: reconfigure {{ backend_interface }} interface
+  meta: flush_handlers
 
