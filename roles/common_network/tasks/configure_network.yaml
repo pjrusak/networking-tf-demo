@@ -1,0 +1,24 @@
+---
+
+- name: include os specific variables
+  include_vars: '{{ item }}'
+  with_first_found:
+    - files:
+        - '{{ ansible_distribution | lower }}.yaml'
+        - 'os_default.yaml'
+      paths:
+        - '../vars'
+
+- name: copy interface config template
+  template:
+    src: 'ifcfg_{{ ansible_distribution | lower }}.j2'
+    dest: '{{ intf_config_path }}/{{ intf_script }}'
+#  with_filetree: '../templates'
+  become: true
+
+- name: enable interface
+  net_interface:
+    name: '{{ backend_interface }}'
+    enabled: true
+    state: up
+  become: true

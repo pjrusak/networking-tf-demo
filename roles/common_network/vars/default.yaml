@@ -1,0 +1,4 @@
+---
+
+intf_config_path: '/etc/sysconfig/network-scripts'
+intf_script: 'ifcfg-{{ backend_interface }}'

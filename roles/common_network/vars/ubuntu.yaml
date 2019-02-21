@@ -1,0 +1,4 @@
+---
+
+intf_config_path: '/etc/network/interfaces.d'
+intf_script: '{{ backend_interface }}'

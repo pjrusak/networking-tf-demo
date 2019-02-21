@@ -1,0 +1,7 @@
+{% set ipv4_host = backend_ip | unique | ipv4('host/prefix') | first %}
+iface {{ backedn_interface }} inet static
+    address {{ ipv4_host | ipaddr('address') }}
+    netmask {{ ipv4_host | ipaddr('netmask') }}
+    network {{ ipv4_host | ipaddr('network') }}
+    broadcast {{ ipv4_host | ipaddr('broadcast') }}
+
