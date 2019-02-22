@@ -8,6 +8,7 @@
         - 'os_default.yaml'
       paths:
         - '../vars'
+  changed_when: true
 
 - name: install prerequisities
   package:

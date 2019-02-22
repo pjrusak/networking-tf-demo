@@ -6,7 +6,7 @@
     state: present
   become: true
 
-- name: update centos machine
+- name: update CentOS machine
   yum:
     name: '*'
     state: latest
@@ -15,10 +15,16 @@
     - skip_ansible_lint
 
 - name: check if reboot is required
-  shell: needs-restarting -r
+  shell: 'needs-restarting -r'
   failed_when: false
-  changed_when: false
+  changed_when: true
+  register: reboot_hint
+
+- debug:
+    msg: 'trigger machine reboot'
+  changed_when: true
   notify: reboot-machine
+  when: reboot_hint.rc != 0
 
 - name: reboot machine if needed
   meta: flush_handlers

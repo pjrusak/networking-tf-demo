@@ -1,12 +1,8 @@
 ---
 
 - hosts: all
-  gather_facts: no
   roles:
     - bootstrap_machines
-
-- hosts: all
-  roles:
     - update_host
     - install_prerequisites
     - checkout_repos

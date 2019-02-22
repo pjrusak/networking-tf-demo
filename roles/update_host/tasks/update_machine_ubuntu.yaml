@@ -1,6 +1,6 @@
 ---
 
-- name: update ubuntu machine
+- name: update Ubuntu machine
   apt:
     update_cache: true
     cache_valid_time: 3600
@@ -23,6 +23,7 @@
 - debug:
     msg: 'trigger machine reboot'
   notify: reboot-machine
+  changed_when: true
   when: stat_reboot.stat.exists
 
 - name: reboot machine if required
