@@ -20,11 +20,8 @@
 
 - name: upgrade pip & setuptools to newest version
   pip:
-    name: '{{ item }}'
+    name: ['pip', 'setuptools']
     state: latest
-  with_items:
-    - 'pip'
-    - 'setuptools'
   become: true
   tags:
     - skip_ansible_lint
