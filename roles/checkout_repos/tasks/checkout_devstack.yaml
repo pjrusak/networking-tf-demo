@@ -1,0 +1,10 @@
+---
+
+- name: checkout devstack repository
+  git:
+    repo: "{{ repositories['os']['url'] }}"
+    dest: "{{ ansible_env.HOME }}/{{ repositories['os']['name'] }}"
+    version: "{{ repositories['os']['branch'] }}"
+    clone: yes
+    update: "{{ override_repositories }}"
+

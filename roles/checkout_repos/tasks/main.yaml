@@ -1,4 +1,9 @@
 ---
 
-- include_tasks: 'git_checkout.yaml'
-  when: checkout_repositories
+- when: checkout_repositories
+  block:
+  - include_tasks: 'checkout_devstack.yaml'
+
+  - include_tasks: 'checkout_deployer.yaml'
+    when: inventory_hostname in groups['tf_controller']
+

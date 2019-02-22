@@ -1,0 +1,10 @@
+---
+
+- name: checkout ansible deployer repository for TF
+  git:
+    repo: "{{ repositories['tf']['url'] }}"
+    dest: "{{ ansible_env.HOME }}/{{ repositories['tf']['name'] }}"
+    version: "{{ repositories['tf']['branch'] }}"
+    clone: yes
+    update: "{{ override_repositories }}"
+
