@@ -2,6 +2,8 @@
 
 packages_name:
   - epel-release
+  - python2-pip
+  - python-setuptools
   - git
   - ack
   - tree

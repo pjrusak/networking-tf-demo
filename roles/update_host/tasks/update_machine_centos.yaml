@@ -17,7 +17,7 @@
 - name: check if reboot is required
   shell: 'needs-restarting -r'
   failed_when: false
-  changed_when: true
+  changed_when: false
   register: reboot_hint
 
 - debug:

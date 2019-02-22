@@ -1,6 +1,8 @@
 ---
 
 packages_name:
+  - python-pip
+  - python-setuptools
   - git
   - ack-grep
   - tree

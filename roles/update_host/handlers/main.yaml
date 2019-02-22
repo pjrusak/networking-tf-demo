@@ -3,10 +3,11 @@
   async: 1
   poll: 0
   ignore_errors: true
+  become: true
   listen: reboot-machine
 
 - name: wait for machine to come back
   local_action: wait_for host={{ ansible_host }} state=started port=22 delay=30
-  become: no
+  become: false
   listen: reboot-machine
 
