@@ -1,0 +1,6 @@
+---
+
+- name: bootstrap CentOS nodes with python2
+  raw: 'sudo bash -c "test -e /usr/bin/python" || yum install -y python2'
+  become: true
+
