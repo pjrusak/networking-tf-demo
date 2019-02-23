@@ -1,7 +1,6 @@
 ---
 
 - hosts: all
-  remote_user: centos
   roles:
     - bootstrap_machines
     - update_host
@@ -10,7 +9,6 @@
     - configure_network
 
 - hosts: tf_controller
-  remote_user: centos
   roles:
     - setup_ssh_keys
 
