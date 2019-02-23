@@ -2,30 +2,37 @@
 
 - when: restack
   block:
-    - name: get status of target running services
+    - name: get running services status on target machines
       service_facts:
 
     - name: initialize devstack services list
       set_fact:
         devstack_running: []
 
-    - name: check status of devstack services
+    - name: get list of running devstack services on host
       set_fact:
         devstack_running: '{{ devstack_running + [item] }}'
+      with_items: "{{ hostvars[inventory_hostname]['services'].keys() | list }}"
       when: >
-        hostvars[inventory_hostname]['services']['{{ item }}']['state'] == 'running' and
-        hostvars[inventory_hostname]['services']['{{ item }}']['name'] == 'devstack@*'
-      with_items: "{{ hostvars[inventory_hostname]['services'].keys() }}"
+        hostvars[inventory_hostname]['services'][item]['state'] == 'running' and
+        hostvars[inventory_hostname]['services'][item]['name'] == 'devstack@*'
 
 - name: unstack current environment
-  shell: ./unstack.sh
+  shell: './unstack.sh'
   args:
     chdir: '{{ ansible_env.HOME }}/devstack'
+    executable: '/bin/bash'
   ignore_errors: yes
-  when: devstack_running
+  when: devstack_running is defined and devstack_running | length > 0
+  tags:
+    - skip_ansible_lint
 
-- name: run OpenStack environment with stack.sh
-  command: ./stack.sh
+- name: deploy OpenStack environment with stack.sh
+  shell: './stack.sh'
   args:
     chdir: '{{ ansible_env.HOME }}/devstack'
+    executable: '/bin/bash'
+  ignore_errors: yes
+  tags:
+    - skip_ansible_lint
 
