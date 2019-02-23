@@ -1,4 +1,4 @@
-{% set ipv4_host = backend_ip | ipv4('host/prefix') | first %}
+{% set ipv4_host = backend_network | ipv4('host/prefix') %}
 DEVICE={{ backend_interface }}
 IPADDR={{ ipv4_host | ipaddr('address') }}
 NETMASK={{ ipv4_host | ipaddr('netmask') }}

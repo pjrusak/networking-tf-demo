@@ -1,4 +1,4 @@
-{% set ipv4_host = backend_ip | ipv4('host/prefix') | first %}
+{% set ipv4_host = backend_network | ipv4('host/prefix') | first %}
 iface {{ backend_interface }} inet static
     address {{ ipv4_host | ipaddr('address') }}
     netmask {{ ipv4_host | ipaddr('netmask') }}

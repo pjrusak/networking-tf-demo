@@ -4,5 +4,5 @@
   when: >
     backend_interface is defined and
     backend_interface | length > 0 and
-    backend_ip is defined and
-    backend_ip | ipaddr
+    backend_network is defined and
+    backend_network | ipaddr
