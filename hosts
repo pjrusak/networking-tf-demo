@@ -1,14 +1,11 @@
 [os_controller]
 os ansible_host=10.100.0.145
-#localhost
 
 [os_compute]
 ovs ansible_host=10.100.0.23
-#localhost
 
 [tf_controller]
 tf ansible_host=10.100.0.48
-#localhost
 
 [all:children]
 os_controller
