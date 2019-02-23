@@ -1,0 +1,30 @@
+---
+
+- name: check if ssh key for remote user exist
+  stat:
+    path: '{{ ansible_env.HOME }}/.ssh/id_rsa.pub'
+  register: stat_user_key
+
+- name: generate ssh-key for remote user
+  shell: |
+    set -o pipefail
+    yes | ssh-keygen -b 4096 -f {{ ansible_env.HOME }}/.ssh/id_rsa -N ""
+  args:
+    executable: '/bin/bash'
+  when: not stat_user_key.stat.exists
+
+- name: check if ssh key for root  user exist
+  stat:
+    path: '/root/.ssh/id_rsa.pub'
+  register: stat_root_key
+  become: true
+
+- name: generate ssh-key for root user
+  shell: |
+    set -o pipefail
+    yes | ssh-keygen -b 4096 -f /root/.ssh/id_rsa -N ""
+  args:
+    executable: '/bin/bash'
+  when: not stat_root_key.stat.exists
+  become: true
+

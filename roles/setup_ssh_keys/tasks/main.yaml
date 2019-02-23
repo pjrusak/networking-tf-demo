@@ -1,0 +1,7 @@
+---
+
+- when: setup_ssh_keys
+  block:
+    - include_tasks: 'setup_keys.yaml'
+    - include_tasks: 'add_keys.yaml'
+

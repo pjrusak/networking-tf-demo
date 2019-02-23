@@ -1,0 +1,24 @@
+---
+
+- name: read remote public user key
+  command: 'cat {{ stat_user_key.stat.path }}'
+  register: user_key_content
+  when: stat_user_key.stat.exists
+
+- name: read root public user key
+  command: 'cat {{ stat_root_key.stat.path }}'
+  register: root_key_content
+  when: stat_root_key.stat.exists
+  become: true
+
+- name: make sure ssh keys are present in authorized_keys
+  authorized_key:
+    user: 'root'
+    key: '{{ item }}'
+    state: present
+    exclusive: no
+  with_items:
+    - '{{ user_key_content.stdout }}'
+    - '{{ root_key_content.stdout }}'
+  become: true
+
