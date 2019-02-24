@@ -1,0 +1,30 @@
+---
+
+- name: add Docker GPG key
+  rpm_key:
+    key: '{{ docker_url }}/{{ ansible_distribution | lower }}/gpg'
+    state: present
+  become: true
+
+- name: add Docker YUM repository
+  get_url:
+    url: '{{ docker_url }}/{{ ansible_distribution | lower }}/docker-ce.repo'
+    dest: /etc/yum.repos.d/docker-ce.repo
+    force: yes
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+
+- name: install Docker-CE with requirements
+  yum:
+    name: '{{ item }}'
+    state: 'present'
+  with_items:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+    - docker-ce
+  notify: docker-service
+  become: true
+

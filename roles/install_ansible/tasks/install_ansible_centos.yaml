@@ -1,0 +1,8 @@
+---
+
+- name: install supported ansible version
+  yum:
+    name: 'ansible-{{ ansible_pkg_version }}'
+    state: present
+  become: true
+

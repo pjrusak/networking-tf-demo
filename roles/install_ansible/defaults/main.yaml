@@ -1,0 +1,5 @@
+---
+
+install_ansible: true
+ansible_pkg_version: '2.4.*'
+

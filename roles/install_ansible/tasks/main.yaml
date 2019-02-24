@@ -1,0 +1,5 @@
+---
+
+- include_tasks: 'install_ansible_{{ ansible_distribution | lower }}.yaml'
+  when: install_ansible
+

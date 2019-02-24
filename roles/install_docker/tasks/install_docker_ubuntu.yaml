@@ -1,0 +1,26 @@
+---
+
+- name: add Docker GPG key
+  apt_key:
+    url: '{{ docker_url }}/{{ ansible_distribution | lower }}/gpg'
+  become: true
+
+- name: add Docker APT repository
+  apt_repository:
+    repo: 'deb [arch=amd64] {{ docker_url }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable'
+  become: true
+
+- name: install Docker-CE with requirements
+  apt:
+    name: '{{ item }}'
+    state: 'present'
+    update_cache: yes
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+    - docker-ce
+  notify: docker-service
+  become: true
+

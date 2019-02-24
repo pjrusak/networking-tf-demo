@@ -1,0 +1,5 @@
+---
+
+install_docker: true
+docker_url: 'https://download.docker.com/linux'
+

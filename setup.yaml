@@ -11,4 +11,6 @@
 - hosts: tf_controller
   roles:
     - setup_ssh_keys
+    - install_docker
+    - install_ansible
 
