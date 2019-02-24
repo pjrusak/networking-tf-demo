@@ -4,5 +4,6 @@
   yum:
     name: 'ansible-{{ ansible_pkg_version }}'
     state: present
+    allow_downgrade: yes
   become: true
 

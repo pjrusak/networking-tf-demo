@@ -1,5 +1,6 @@
 ---
 
 install_docker: true
+configure_docker_network: true
 docker_url: 'https://download.docker.com/linux'
 

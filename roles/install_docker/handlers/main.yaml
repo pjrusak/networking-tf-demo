@@ -1,9 +1,9 @@
 ---
 
 - name: starting Docker CE service
-  service:
+  systemd:
     name: "docker"
-    state: started
+    state: restarted
     enabled: yes
   listen: docker-service
   become: true
