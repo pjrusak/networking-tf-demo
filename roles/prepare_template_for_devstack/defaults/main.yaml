@@ -1,0 +1,13 @@
+---
+
+devstack_dest: '/opt/stack'
+devstack_logfile: '{{ devstack_dest}}/logs/stack.sh.log'
+devstack_admin_passwd: 'admin'
+devstack_branch: 'master'
+devstack_multihost: false
+devstack_dvr: false
+devstack_systemd: true
+devstack_venv: false
+opencontrail_api_ip: "{%set hostname = groups['tf_controller'][0] %}{{ hostvars[hostname]['ansible_default_ipv4']['address'] }}"
+opencontrail_api_port: '8082'
+

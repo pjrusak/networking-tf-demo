@@ -3,6 +3,5 @@
 - name: prepare local.conf for deployment
   template:
     src: 'controller_local.j2'
-    dest: '{{ ansible_env.HOME }}/devstack'
-  with_filetree: '../templates'
+    dest: '{{ ansible_env.HOME }}/devstack/local.conf'
 

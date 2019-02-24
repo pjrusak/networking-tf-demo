@@ -17,6 +17,7 @@ backend_interface = eth1
 backend_network = 192.168.11.12/24
 
 [all:vars]
+backend_gateway = 192.168.11.111
 bootstrap_nodes = true
 update_machine = true
 setup_machines = true
