@@ -1,30 +1,45 @@
 ---
 
-- name: install yum-utils
-  package:
-    name: yum-utils
-    state: present
-  become: true
+- name: check for update
+  shell: |
+    set -eo pipefail
+    yum list updates | awk 'f;/Updated Packages/{f=1;}' | awk '{ print $1 }'
+  args:
+    warn: false
+  changed_when: updates.stdout_lines | length > 0
+  register: updates
 
-- name: update CentOS machine
-  yum:
-    name: '*'
-    state: latest
-  become: true
-  tags:
-    - skip_ansible_lint
+- name: display count
+  debug:
+    msg: 'Found {{ updates.stdout_lines | length }} packages to be updated:\n\n{{ updates.stdout }}'
 
-- name: check if reboot is required
-  shell: 'needs-restarting -r'
-  failed_when: false
-  changed_when: false
-  register: reboot_hint
+- when: updates.stdout_lines | length > 0
+  block:
+    - name: install yum-utils
+      package:
+        name: yum-utils
+        state: present
+      become: true
 
-- debug:
-    msg: 'trigger machine reboot'
-  changed_when: true
-  notify: reboot-machine
-  when: reboot_hint.rc != 0
+    - name: update CentOS machine
+      yum:
+        name: '*'
+        state: latest
+      become: true
+      tags:
+        - skip_ansible_lint
+
+    - name: check if reboot is required
+      shell: 'needs-restarting -r'
+      failed_when: false
+      changed_when: false
+      register: reboot_hint
+
+    - debug:
+        msg: 'Trigger machine reboot'
+      changed_when: true
+      notify: reboot-machine
+      when: reboot_hint.rc != 0
 
 - name: reboot machine if needed
   meta: flush_handlers
