@@ -22,6 +22,11 @@ HORIZON_BRANCH=$USE_BRANCH
 KEYSTONE_BRANCH=$USE_BRANCH
 NEUTRON_BRANCH=$USE_BRANCH
 
+MYSQL_HOST=$SERVICE_HOST
+RABBIT_HOST=$SERVICE_HOST
+GLANCE_HOSTPORT=$SERVICE_HOST:9292
+ENABLED_SERVICES=n-cpu,n-api-meta,placement-client,q-dhcp,q-l3,q-meta,q-agt
+
 LOG_COLOR=True
 {% if devstack_systemd %}
 USE_SYSTEMD=True
@@ -30,35 +35,21 @@ USE_SCREEN=True
 {% endif %}
 USE_VENV={{ devstack_venv }}
 
-disable_service n-net c-sch c-api c-vol dstat tempest
+NOVA_VNC_ENABLED=True
+NOVNCPROXY_URL="http://{{ devstack_controller_fip }}:6080/vnc_auto.html"
+VNCSERVER_LISTEN=$HOST_IP
+VNCSERVER_PROXYCLIENT_ADDRESS=$VNCSERVER_LISTEN
 
-#networking settings
-NEUTRON_CREATE_INITIAL_NETWORKS=False
-PUBLIC_INTERFACE={{ backend_interface }}
-PUBLIC_NETWORK_GATEWAY={{ backend_gateway }}
-
-#ovs provider networking configuration
-Q_USE_PROVIDERNET_FOR_PUBLIC=True
-OVS_PHYSICAL_BRIDGE=br-ex
-PUBLIC_BRIDGE=br-ex
-OVS_BRIDGE_MAPPINGS=public:br-ex
-
-Q_USE_SECGROUP=True
-Q_PLUGIN=ml2
-
-#opencontrail plugin settings
 {% if not devstack_dvr %}
 ML2_L3_PLUGIN=opencontrail-router
 {% else %}
-Q_DVR_MODE=dvr_snat
+Q_DVR_MODE=dvr
 {% endif %}
-
-NOVNCPROXY_URL=http://{{ devstack_controller_fip }}:6080/vnc_auto.html
 
 OPENCONTRAIL_APISERVER_IP={{ opencontrail_api_ip }}
 OPENCONTRAIL_APISERVER_PORT={{ opencontrail_api_port }}
 
-enable_plugin networking-opencontrail https://github.com/openstack/networking-opencontrail {{ devstack_branch }}
+enable_plugin networking-opencontrail https://git.openstack.org/openstack/networking-opencontrail {{ devstack_branch }}
 
 {% if devstack_dvr %}
 [[post-config|$OPENCONTRAIL_ML2_CONF_FILE]]

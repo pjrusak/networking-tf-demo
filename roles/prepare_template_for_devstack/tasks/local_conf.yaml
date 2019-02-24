@@ -1,7 +1,20 @@
 ---
 
-- name: prepare local.conf for deployment
+- name: prepare local.conf for deployment on DevStack controller node
   template:
     src: 'controller_local.j2'
     dest: '{{ ansible_env.HOME }}/devstack/local.conf'
+  when: inventory_hostname in groups['os_controller']
+
+- name: prepare local.conf for deployment on OVS compute node
+  template:
+    src: 'ovs_local.j2'
+    dest: '{{ ansible_env.HOME }}/devstack/local.conf'
+  when: inventory_hostname in groups['os_compute']
+
+- name: prepare local.conf for deployment on TF controller node
+  template:
+    src: 'tf_local.j2'
+    dest: '{{ ansible_env.HOME }}/devstack/local.conf'
+  when: inventory_hostname in groups['tf_controller']
 
