@@ -1,0 +1,64 @@
+provider_config:
+  bms:
+    ntpserver: 0.pl.pool.ntp.org
+    nameserer: 8.8.8.8
+    ssh_user: root
+    ssh_private_key: /root/.ssh/id_rsa
+    domainsuffix: novalocal
+
+instances:
+  bms1:
+    provider: bms
+    ip: {{ contrail_service_ip }}
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+      vrouter:
+      openstack:
+      openstack_compute:
+
+global_configuration:
+  CONTAINER_REGISTRY: {{ contrail_docker_registry }}
+
+contrail_configuration:
+  OPENSTACK_VERSION: {{ openstack_version }}
+  CONTRAIL_VERSION: {{ contrail_version }}
+  CLOUD_ORCHESTRATOR: openstack
+  LOG_LEVEL: SYS_DEBUG
+  PHYSICAL_INTERFACE: {{ backend_interface }}
+  VROUTER_GATEWAY: {{ backend_gateway }}
+  AUTH_MODE: keystone
+  AAA_MODE: no-auth
+  KEYSTONE_AUTH_ADMIN_PASSWORD: {{ openstack_admin_passwd }}
+  KEYSTONE_AUTH_HOST: {{ openstack_service_ip }}
+  KEYSTONE_AUTH_URL_VERSION: /v3
+  KEYSTONE_AUTH_INSECURE: true
+  RABBITMQ_NODE_PORT: 5673
+  UPDATE_IMAGES: true
+  CONTROLLER_NODES: {{ contrail_service_ip }}
+  CONTROL_NODES: {{ contrail_backend_ip }}
+  ANALYTICSDB_NODES: {{ contrail_service_ip }}
+  WEBUI_NODES: {{ contrail_service_ip }}
+  ANALYTICS_NODES: {{ contrail_service_ip }}
+  CONFIGDB_NODES: {{ contrail_service_ip }}
+  CONFIG_NODES: {{ contrail_service_ip }}
+  CONFIG_NODEMGR__DEFAULTS__minimum_diskGB: 2
+  DATABASE_NODEMGR__DEFAULTS__minimum_diskGB: 2
+  JVM_EXTRA_OPTS: "-Xms1g -Xmx2g"
+
+kolla_config:
+  kolla_globals:
+    enable_haproxy: no
+    enable_ironic: no
+    enable_ironic_notification: no
+    openstack_service_workers: 1
+  customize:
+    nova.conf: |
+      [libvirt]
+      virt_type=qemu
+      cpu_mode=none
+

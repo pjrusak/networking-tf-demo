@@ -1,0 +1,4 @@
+---
+
+- include_tasks: 'prepare_template.yaml'
+

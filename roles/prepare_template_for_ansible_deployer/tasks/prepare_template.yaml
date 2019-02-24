@@ -1,0 +1,20 @@
+---
+
+- name: include OS-specific variables
+  include_vars: '{{ item }}'
+  with_first_found:
+    - '{{ ansible_distribution | lower }}.yaml'
+    - default.yaml
+
+- name: install dependencies for install_kolla_dependencies role in c-a-d
+  package:
+    name: '{{ item }}'
+    state: 'present'
+  with_items: '{{ package_dependecies }}'
+  become: true
+
+- name: copy config for contrail-ansible-deployer
+  template:
+    src: "instances.j2"
+    dest: "{{ ansible_deployer_dir }}/config/instances.yaml"
+

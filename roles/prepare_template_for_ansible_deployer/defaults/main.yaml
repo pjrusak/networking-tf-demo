@@ -1,0 +1,11 @@
+---
+
+ansible_deployer_dir: '{{ ansible_env.HOME }}/contrail-ansible-deployer'
+contrail_docker_registry: 'opencontrailnightly'
+contrail_version: 'master-latest'
+openstack_version: 'rocky'
+openstack_admin_passwd: 'admin'
+openstack_service_ip: "{%set hostname = groups['os_controller'][0] %}{{ hostvars[hostname]['ansible_default_ipv4']['address'] }}"
+contrail_service_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+contrail_backend_ip: "{% set interface = 'ansible_' + backend_interface %}{{ hostvars[inventory_hostname][interface]['ipv4']['address'] }}"
+
