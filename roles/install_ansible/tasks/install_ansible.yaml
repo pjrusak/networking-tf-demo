@@ -1,9 +1,8 @@
 ---
 
 - name: install supported ansible version
-  yum:
-    name: 'ansible-{{ ansible_pkg_version }}'
+  pip:
+    name: 'ansible=={{ ansible_pkg_version }}'
     state: present
-    allow_downgrade: yes
   become: true
 

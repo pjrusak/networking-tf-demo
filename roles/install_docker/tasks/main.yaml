@@ -1,17 +1,15 @@
 ---
 
 - name: change default Docker network
-  blockinfile:
-    block: |
+  file:
+    content: |
       {
          "bip": "172.22.0.1/16"
       }
-    marker: false
     path: '/etc/docker/daemon.json'
     owner: root
     group: root
     mode: 0644
-    create: yes
   notify: docker-service
   when: configure_docker_network
   become: true
