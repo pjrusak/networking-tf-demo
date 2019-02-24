@@ -1,0 +1,4 @@
+---
+
+- include_tasks: 'discover_computes.yaml'
+

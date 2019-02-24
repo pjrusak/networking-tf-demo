@@ -16,7 +16,8 @@
   tags:
     - skip_ansible_lint
 
-- stat:
+- name: check if reboot required
+  stat:
     path: '/var/run/reboot-required'
   register: stat_reboot
 

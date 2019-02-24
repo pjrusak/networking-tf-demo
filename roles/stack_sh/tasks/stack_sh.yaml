@@ -33,6 +33,16 @@
     chdir: '{{ ansible_env.HOME }}/devstack'
     executable: '/bin/bash'
   ignore_errors: yes
+  register: stack_sh
   tags:
     - skip_ansible_lint
+
+- name: check status of deployment script
+  file:
+    path: '/tmp/discover_hosts'
+    state: touch
+    owner: centos
+    group: stack
+    mode: 0644
+  when: stack_sh.rc == 0
 

@@ -3,4 +3,5 @@
 install_docker: true
 configure_docker_network: true
 docker_url: 'https://download.docker.com/linux'
+docker_network: '172.22.0.1/16'
 
