@@ -2,7 +2,7 @@
 
 - name: discover compute nodes
   command: 'nova-manage cell_v2 discover_hosts --verbose'
-  removes:
-    - '/tmp/discover_hosts'
+  args:
+    removes: '/tmp/discover_hosts'
   become: true
 
