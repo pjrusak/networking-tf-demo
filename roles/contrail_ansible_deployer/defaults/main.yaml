@@ -1,0 +1,5 @@
+---
+
+ansible_deployer_dir: '{{ ansible_env.HOME }}/contrail-ansible-deployer'
+contrail_docker_registry: 'opencontrailnightly'
+

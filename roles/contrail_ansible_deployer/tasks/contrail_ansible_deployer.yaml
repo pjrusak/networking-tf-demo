@@ -1,0 +1,28 @@
+---
+
+- name: configure AIO setup with configure_instances.yml playbook (might take a longer while)
+  command: 'ansible-playbook -i inventory/ -e skip_openstack=true -e openstack=none playbooks/configure_instances.yml -v'
+  args:
+    chdir: '{{ ansible_deployer_dir }}'
+  environment:
+    ANSIBLE_HOST_KEY_CHECKING: 'False'
+    ANSIBLE_STDOUT_CALLBACK: debug
+  become: true
+
+- name: provision TF with install_contrail.yml playbook (might take a longer while)
+  command: 'ansible-playbook -i inventory/ -e skip_openstack=true -e openstack=none playbooks/install_contrail.yml'
+  args:
+    chdir: "{{ ansible_deployer_dir }}"
+  environment:
+    ANSIBLE_HOST_KEY_CHECKING: 'False'
+    ANSIBLE_STDOUT_CALLBACK: debug
+  become: true
+
+- name: get vrouter-port-control script from container
+  command: 'docker cp vrouter_vrouter-agent_1:/bin/vrouter-port-control /bin/'
+  become: true
+
+- name: pull contrail-status container
+  docker_image:
+    name: '{{ contrail_docker_registry }}/contrail-status:{{ openstack_version }}-{{ contrail_version }}'
+

@@ -1,0 +1,33 @@
+---
+
+- hosts: all
+  tasks:
+    - name: gather facts for remote machines
+      setup:
+
+- hosts: os_controller
+  gather_facts: no
+  roles:
+    - prepare_template_for_devstack
+    - stack_sh
+
+# this has to be first as stack_sh will
+# upgrade pip and this causes ansible deployer
+# configure playbook to fail
+- hosts: tf_controller
+  gather_facts: no
+  roles:
+    - prepare_template_for_ansible_deployer
+    - contrail_ansible_deployer
+
+- hosts: all:!os_controller
+  gather_facts: no
+  roles:
+    - prepare_template_for_devstack
+    - stack_sh
+
+- hosts: os_controller
+  gather_facts: no
+  roles:
+    - discover_compute_nodes
+
