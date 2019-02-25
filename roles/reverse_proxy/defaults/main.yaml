@@ -1,0 +1,7 @@
+---
+
+setup_proxy: true
+proxy_service_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+proxy_auth_port: '35357'
+proxy_service_port: '5000'
+

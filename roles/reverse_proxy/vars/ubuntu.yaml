@@ -1,0 +1,7 @@
+---
+
+proxy_log_path: '/var/log/apache2'
+httpd_conf_dir: '/etc/apache2/sites-available'
+httpd_link_dir: '/etc/apache2/sites-enabled'
+httpd_service: 'apache2'
+

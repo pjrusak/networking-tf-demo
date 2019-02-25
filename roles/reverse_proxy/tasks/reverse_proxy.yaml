@@ -1,0 +1,37 @@
+---
+
+- name: include OS-specific variables
+  include_vars: '{{ item }}'
+  with_first_found:
+    - '{{ ansible_distribution | lower }}.yaml'
+    - default.yaml
+
+- name: copy proxy configuration templates to DevStack controller
+  template:
+    src: 'keystone-proxy.j2'
+    dest: '{{ httpd_conf_dir }}/keystone-{{ item.name}}-proxy.conf'
+    owner: root
+    group: root
+    mode: '0644'
+  with_items: 
+    - { name: 'auth', port: '{{ proxy_auth_port }}' }
+    - { name: 'service', port: '{{ proxy_service_port }}' }
+  register: template_dest
+  notify: restart-httpd
+  become: true
+
+- name: create symlinks for enabled sites
+  file:
+    src: '{{ item.dest }}'
+    dest: '{{ httpd_link_dir}}/{{ item.path | basename }}'
+    owner: root
+    group: root
+    mode: '0644'
+    state: link
+  with_items: template_dest.results
+  when: ansible_distribution == 'Ubuntu'
+  become: true
+
+- name: trigger httpd service restart
+  meta: flush_handlers
+

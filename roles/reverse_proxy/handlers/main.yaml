@@ -1,0 +1,8 @@
+---
+
+- name: restart-httpd
+  systemd:
+    name: '{{ httpd_service }}'
+    state: restarted
+  become: true
+

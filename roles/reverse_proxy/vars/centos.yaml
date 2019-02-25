@@ -1,0 +1,6 @@
+---
+
+proxy_log_path: '/var/log/httpd'
+httpd_conf_dir: '/etc/httpd/conf.d'
+httpd_service: 'httpd'
+

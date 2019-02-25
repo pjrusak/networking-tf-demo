@@ -11,6 +11,7 @@
   roles:
     - prepare_template_for_devstack
     - devstack
+    - reverse_proxy
 
 # this has to be first as stack_sh will
 # upgrade pip and this causes ansible deployer

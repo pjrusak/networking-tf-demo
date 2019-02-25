@@ -1,0 +1,23 @@
+#jinja2: trim_blocks:False
+Listen {{ item.port }}
+
+<VirtualHost *:{{ item.port }}>
+    # Disable KeepAlive to fix bug #1630664 a.k.a the
+    # ('Connection aborted.', BadStatusLine("''",)) error
+    KeepAlive Off
+
+    # This increase in allowed request header sizes is required
+    # for swift functional testing to work with tls enabled. It is 2 bytes
+    # larger than the apache default of 8190.
+    LimitRequestFieldSize 8190
+
+    <Location />
+        ProxyPass http://{{ proxy_service_ip }}/identity/ retry=0 nocanon
+        ProxyPassReverse http://{{ proxy_service_ip }}/identity
+    </Location>
+    ErrorLog {{ proxy_log_path }}/proxy_error.log
+    ErrorLogFormat {% raw %}"%{cu}t [%-m:%l] [pid %P:tid %T] %7F: %E: [client\ %a] [frontend\ %A] %M% ,\ referer\ %{Referer}i"{% endraw %}
+    LogLevel info
+    CustomLog {{ proxy_log_path }}/proxy_access.log {% raw %}"%{%Y-%m-%d}t %{%T}t.%{msec_frac}t [%l] %a \"%r\" %>s %b"{% endraw %}
+</VirtualHost>
+
