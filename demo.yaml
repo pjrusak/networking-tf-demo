@@ -1,0 +1,15 @@
+---
+
+- hosts: os_controller
+  tasks:
+    - name: authenticate to the DevStack cloud
+      os_auth:
+        cloud: devstack
+
+    - name: gather list of projects
+      os_project_facts:
+        cloud: devstack
+
+    - debug:
+        var: openstack_projects
+ 
