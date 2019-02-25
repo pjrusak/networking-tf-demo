@@ -27,7 +27,15 @@
   tags:
     - skip_ansible_lint
 
-- name: deploy OpenStack environment with stack.sh
+- name: upgrade pip & setuptools to newest version (devstack doesn't handle this properly)
+  pip:
+    name: ['pip', 'setuptools']
+    state: latest
+    become: true
+  tags:
+    - skip_ansible_lint
+
+- name: deploy OpenStack environment with stack.sh (might take a longer while)
   shell: './stack.sh'
   args:
     chdir: '{{ ansible_env.HOME }}/devstack'

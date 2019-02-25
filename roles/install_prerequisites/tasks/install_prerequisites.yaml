@@ -18,11 +18,3 @@
     - '{{ packages_name }}'
   become: true
 
-- name: upgrade pip & setuptools to newest version
-  pip:
-    name: ['pip', 'setuptools']
-    state: latest
-  become: true
-  tags:
-    - skip_ansible_lint
-

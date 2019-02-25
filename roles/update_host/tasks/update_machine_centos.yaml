@@ -9,7 +9,7 @@
   changed_when: updates.stdout_lines | length > 0
   register: updates
 
-- name: display count
+- name: package list to be updated
   debug:
     msg: 'Found {{ updates.stdout_lines | length }} packages to be updated:\n\n{{ updates.stdout }}'
 
