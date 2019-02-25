@@ -1,0 +1,6 @@
+---
+
+- include_tasks: 'unstack.yaml'
+  when: restack
+
+- include_tasks: 'stack.yaml'

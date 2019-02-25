@@ -1,0 +1,27 @@
+---
+
+- name: get running services status on target machines
+  service_facts:
+
+- name: initialize devstack services list
+  set_fact:
+    devstack_running: []
+
+- name: get list of running devstack services on host
+  set_fact:
+    devstack_running: '{{ devstack_running + [item] }}'
+  with_items: "{{ hostvars[inventory_hostname]['services'].keys() | list }}"
+  when: >
+    hostvars[inventory_hostname]['services'][item]['state'] == 'running' and
+    hostvars[inventory_hostname]['services'][item]['name'] == 'devstack@*'
+
+- name: unstack current environment
+  shell: './unstack.sh'
+  args:
+    chdir: '{{ ansible_env.HOME }}/devstack'
+    executable: '/bin/bash'
+  ignore_errors: yes
+  when: devstack_running | length > 0
+  tags:
+    - skip_ansible_lint
+

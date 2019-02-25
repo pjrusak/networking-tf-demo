@@ -1,6 +1,7 @@
 ---
 
 - hosts: all
+  gather_facts: no
   tasks:
     - name: gather facts for remote machines
       setup:
@@ -9,7 +10,7 @@
   gather_facts: no
   roles:
     - prepare_template_for_devstack
-    - stack_sh
+    - devstack
 
 # this has to be first as stack_sh will
 # upgrade pip and this causes ansible deployer
@@ -24,7 +25,7 @@
   gather_facts: no
   roles:
     - prepare_template_for_devstack
-    - stack_sh
+    - devstack
 
 - hosts: os_controller
   gather_facts: no
