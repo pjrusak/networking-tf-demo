@@ -4,8 +4,8 @@ devstack_dest: '/opt/stack'
 devstack_logfile: '{{ devstack_dest}}/logs/stack.sh.log'
 devstack_admin_passwd: 'admin'
 devstack_branch: 'master'
-devstack_multihost: false
-devstack_dvr: false
+devstack_multihost: true
+devstack_dvr: true
 devstack_systemd: true
 devstack_venv: false
 devstack_service_ip: "{%set hostname = groups['os_controller'][0] %}{{ hostvars[hostname]['ansible_default_ipv4']['address'] }}"
