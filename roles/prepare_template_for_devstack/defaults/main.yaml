@@ -3,6 +3,7 @@
 devstack_dest: '/opt/stack'
 devstack_logfile: '{{ devstack_dest}}/logs/stack.sh.log'
 devstack_admin_passwd: 'admin'
+devstack_git_base: 'https://git.openstack.org'
 devstack_branch: 'master'
 devstack_multihost: true
 devstack_dvr: true
