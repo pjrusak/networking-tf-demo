@@ -13,6 +13,7 @@ packages_name:
   - jq
   - patch
   - tcpdump
+  - bridge-utils
   - vim
   - tmux
 
