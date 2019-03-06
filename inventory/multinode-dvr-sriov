@@ -1,0 +1,44 @@
+[os_controller:vars]
+ansible_host = 10.84.18.39
+remote_user = tungsten
+backend_interface = ens1f1.200
+#backend_network =  172.16.200.17/24
+
+[tf_controller:vars]
+ansible_host = 10.84.18.40
+remote_user = tungsten
+backend_interface = ens1f1.200
+#backend_network =  172.16.200.13/24
+
+[os_compute:vars]
+ansible_host = 10.84.18.37
+remote_user = tungsten
+backend_interface = ens1f1.200
+#backend_network =  172.16.200.12/24
+
+[all:vars]
+backend_gateway = 172.16.200.111
+bootstrap_nodes = true
+update_machine = true
+setup_machines = true
+checkout_repositories = true
+override_repositories = true
+setup_ssh_keys = true
+devstack_multihost = true
+devstack_dvr = true
+#devstack_git_base=git://git.openstack.org
+
+[os_controller]
+os
+
+[os_compute]
+ovs
+
+[tf_controller]
+tf
+
+[all:children]
+os_controller
+os_compute
+tf_controller
+
