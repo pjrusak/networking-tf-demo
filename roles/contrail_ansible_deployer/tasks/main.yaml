@@ -1,4 +1,5 @@
 ---
 
+- include_tasks: 'ansible_deployer_prerequisities.yaml'
 - include_tasks: 'contrail_ansible_deployer.yaml'
 

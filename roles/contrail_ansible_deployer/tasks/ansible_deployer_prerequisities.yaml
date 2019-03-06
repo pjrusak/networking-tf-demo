@@ -1,0 +1,8 @@
+---
+
+- name: install modules required to run contrail-ansible-deployer
+  pip:
+    name: 'requests'
+    state: present
+    become: true
+
